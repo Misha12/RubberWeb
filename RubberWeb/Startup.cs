@@ -39,51 +39,35 @@ namespace RubberWeb
                 .AddScoped<GrillBotService>()
                 .AddControllersWithViews();
 
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services
+                .AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseExceptionHandler("/Error");
-            }
 
             app.UseStaticFiles();
             if (!env.IsDevelopment())
-            {
                 app.UseSpaStaticFiles();
-            }
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
-
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
+            app
+                .UseRouting()
+                .UseEndpoints(endpoints =>
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
+                    endpoints.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}/{id?}");
+                })
+                .UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "ClientApp";
+
+                    if (env.IsDevelopment())
+                        spa.UseAngularCliServer(npmScript: "start");
+                });
         }
     }
 }
