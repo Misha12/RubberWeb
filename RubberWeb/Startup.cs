@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RubberWeb.Services;
+using System;
+using System.Net.Http.Headers;
 
 namespace RubberWeb
 {
@@ -16,11 +20,25 @@ namespace RubberWeb
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
+            var connectionString = Configuration.GetConnectionString("Default");
+            services
+                .AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+            services
+                .AddHttpClient("GrillBot", client =>
+                {
+                    var config = Configuration.GetSection("GrillBot");
+
+                    client.BaseAddress = new Uri(config["BaseUrl"]);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("GrillBot", config["Token"]);
+                });
+
+            services
+                .AddScoped<GrillBotService>()
+                .AddControllersWithViews();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
