@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RubberWeb.Models;
+using RubberWeb.Models.GrillBot;
 using RubberWeb.Models.Karma;
 using RubberWeb.Services;
 
@@ -12,12 +13,12 @@ namespace RubberWeb.Controllers
     [ApiController]
     public class KarmaController : Controller
     {
-        private AppDbContext Context { get; }
+        private AppDbRepository Repository { get; }
         private GrillBotService GrillBotService { get; }
 
-        public KarmaController(AppDbContext context, GrillBotService grillBotService)
+        public KarmaController(AppDbRepository repository, GrillBotService grillBotService)
         {
-            Context = context;
+            Repository = repository;
             GrillBotService = grillBotService;
         }
 
@@ -25,16 +26,19 @@ namespace RubberWeb.Controllers
         [ProducesResponseType(typeof(PaginatedData<KarmaItem>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetData([FromQuery] PaginatedRequest request)
         {
-            var query = Context.Karma.AsQueryable();
-            query = request.Sort == PageSort.Asc ? query.OrderBy(o => o.Karma) : query.OrderByDescending(o => o.Karma);
+            var query = Repository.GetKarma(request.Sort);
             var data = PaginatedData<KarmaItem>.Create(query, request, entity => new KarmaItem(entity));
-            
-            var userIds = data.Data.Select(o => o.UserID).ToList();
-            var users = await GrillBotService.GetUsersSimpleInfoBatchAsync(userIds);
 
-            foreach(var item in data.Data)
+            var users = await GrillBotService.GetUsersSimpleInfoBatchAsync(data.Data.Select(o => o.UserID));
+
+            foreach (var item in data.Data)
             {
-                item.User = users.Find(o => o.ID == item.UserID);
+                var user = users.Find(o => o.ID == item.UserID);
+
+                if (user == null)
+                    user = new SimpleUserInfo() { ID = item.UserID };
+
+                item.User = user;
             }
 
             return Ok(data);
@@ -44,7 +48,7 @@ namespace RubberWeb.Controllers
         {
             if (disposing)
             {
-                Context.Dispose();
+                Repository.Dispose();
                 GrillBotService.Dispose();
             }
 

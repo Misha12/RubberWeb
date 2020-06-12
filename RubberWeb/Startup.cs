@@ -37,13 +37,13 @@ namespace RubberWeb
 
             services
                 .AddScoped<GrillBotService>()
+                .AddScoped<AppDbRepository>()
                 .AddControllersWithViews();
 
             services
                 .AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
