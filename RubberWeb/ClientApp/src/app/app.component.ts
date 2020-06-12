@@ -3,6 +3,7 @@ import { ApiService } from 'src/services/api.service';
 import { PaginatedRequest, PaginatedData } from 'src/models/pagination';
 import { KarmaItem } from 'src/models/karma';
 import { MainComponent } from './main/main.component';
+import { StorageService } from 'src/services/storage.service';
 
 @Component({
     selector: 'app-root',
@@ -14,10 +15,14 @@ export class AppComponent implements OnInit {
 
     @ViewChild('main', { static: false }) mainComponent: MainComponent;
 
-    constructor(private api: ApiService) { }
+    constructor(
+        private api: ApiService,
+        private storage: StorageService
+    ) { }
 
     ngOnInit() {
-        this.getData(1);
+        const page = parseInt(this.storage.get('page', 'session') || '1', 10);
+        this.getData(page);
     }
 
     private getData(page: number) {
@@ -30,6 +35,8 @@ export class AppComponent implements OnInit {
             if (this.mainComponent) {
                 this.mainComponent.loading = false;
             }
+
+            this.storage.store('page', page.toString(), 'session');
         });
     }
 
