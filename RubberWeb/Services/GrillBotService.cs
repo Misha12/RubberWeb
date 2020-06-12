@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using RubberWeb.Models.GrillBot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace RubberWeb.Services
@@ -23,9 +23,10 @@ namespace RubberWeb.Services
 
         public async Task<List<SimpleUserInfo>> GetUsersSimpleInfoBatchAsync(List<ulong> userIds)
         {
-            var queryParams = string.Join("&", userIds.Select(id => $"userIds={id}"));
-            var response = await HttpClient.GetAsync($"users/usersSimpleInfoBatch/{GuildID}?{queryParams}");
+            var request = new GetUsersSimpleInfoBatchRequest() { UserIDs = userIds };
+            using var postData = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
+            var response = await HttpClient.PostAsync($"users/usersSimpleInfoBatch/{GuildID}", postData);
             if (!response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
