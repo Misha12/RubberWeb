@@ -6,7 +6,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 import { MainComponent } from './main/main.component';
-import { LoaderComponent } from './loader/loader.component';
+import { LoaderComponent } from './loader.component';
 
 @NgModule({
     declarations: [
