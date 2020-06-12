@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
 using RubberWeb.Models;
 using RubberWeb.Models.GrillBot;
 using RubberWeb.Models.Karma;
@@ -31,16 +32,16 @@ namespace RubberWeb.Controllers
 
             var users = await GrillBotService.GetUsersSimpleInfoBatchAsync(data.Data.Select(o => o.UserID));
 
+            var position = PaginationHelper.CountSkipValue(request) + 1;
             foreach (var item in data.Data)
             {
-                var user = users.Find(o => o.ID == item.UserID);
+                item.User = users.Find(o => o.ID == item.UserID);
 
-                if (user == null)
-                    user = new SimpleUserInfo() { ID = item.UserID };
-
-                item.User = user;
+                item.Position = position;
+                position++;
             }
 
+            data.Data = data.Data.Where(o => o.User != null).ToList();
             return Ok(data);
         }
 

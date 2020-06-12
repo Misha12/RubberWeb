@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PaginatedData } from 'src/models/pagination';
 import { KarmaItem } from 'src/models/karma';
 
 @Component({
     selector: 'app-main',
-    templateUrl: './main.component.html'
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
     @Input() data: PaginatedData<KarmaItem>;
+    @Input() currentPage = 1;
+    @Output() pageChanged = new EventEmitter<number>();
 
-    get json() {
-        return JSON.stringify(this.data);
+    onPageChange(event: any) {
+        this.pageChanged.emit(event);
     }
 }

@@ -61,7 +61,10 @@ namespace RubberWeb
             else
                 app.UseExceptionHandler("/Error");
 
-            app.UseStaticFiles();
+            app
+                .UseStaticFiles()
+                .UseMiddleware<DelayMiddleware>();
+
             if (!env.IsDevelopment())
                 app.UseSpaStaticFiles();
 

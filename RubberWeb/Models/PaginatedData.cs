@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RubberWeb.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace RubberWeb.Models
                 TotalItemsCount = query.Count(),
             };
 
-            var skip = (request.Page == 0 ? 0 : request.Page - 1) * request.Limit;
+            var skip = PaginationHelper.CountSkipValue(request);
             
             data.CanNext = skip + request.Limit < data.TotalItemsCount;
             data.CanPrev = skip > 0;

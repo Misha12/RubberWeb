@@ -1,3 +1,36 @@
-<pre class="text-wrap">
-    {{json}}
-</pre>
+<ngb-pagination [collectionSize]="data.totalItemsCount" ([page])="currentPage" [pageSize]="50" [boundaryLinks]="true"
+    [rotate]="true" (pageChange)="onPageChange($event)">
+</ngb-pagination>
+
+<section>
+    <div class="text-white" class="content-data">
+        <div class="items-container">
+            <div *ngFor="let item of data.data" class="container-item">
+                <div class="profile-image" style="max-width: 128px;">
+                    <img [attr.src]="item.user.avatarUrl" [attr.alt]="item.user.discriminator" width="64" height="64"
+                        class="rounded-circle">
+                </div>
+
+                <div class="position">{{item.position | numberFormat}}</div>
+
+                <div class="columns">
+                    <h5 class="name">
+                        {{item.user.nickname || item.user.name}}#{{item.user.discriminator}}
+                    </h5>
+
+                    <h4 class="count">
+                        {{item.karma | numberFormat}}
+
+                        <span class="giving">
+                            Pozitivní: {{item.positive | numberFormat}}
+                        </span>
+
+                        <span class="giving">
+                            Negativní: {{item.negative | numberFormat}}
+                        </span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

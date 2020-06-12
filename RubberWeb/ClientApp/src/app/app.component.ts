@@ -9,17 +9,24 @@ import { KarmaItem } from 'src/models/karma';
 })
 export class AppComponent implements OnInit {
     isLoaded = false;
-    page = 1;
     data: PaginatedData<KarmaItem>;
 
     constructor(private api: ApiService) { }
 
     ngOnInit() {
-        const request: PaginatedRequest = { limit: 100, page: this.page };
+        this.getData(1);
+    }
+
+    private getData(page: number) {
+        const request: PaginatedRequest = { page };
 
         this.api.getKarmaData(request).subscribe(data => {
             this.data = data;
             this.isLoaded = true;
         });
+    }
+
+    onPageChanged(page: number) {
+        this.getData(page);
     }
 }

@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 import { MainComponent } from './main/main.component';
 import { LoaderComponent } from './loader.component';
+import { NumberFormatPipe } from 'src/services/number-format.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         MainComponent,
-        LoaderComponent
+        LoaderComponent,
+        NumberFormatPipe
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -2,10 +2,20 @@
 
 html,
 body {
-    background-color: #111;
-    height: 100%;
+    background-color: #23272a;
 }
 
-* {
-    color: $gray-400 !important;
+.pagination {
+    $color: #7289da;
+
+    & .page-item {
+        &.active .page-link {
+            background-color: $color;
+            border-color: $color;
+        }
+
+        &:not(.active) .page-link {
+            color: $color;
+        }
+    }
 }
