@@ -1,7 +1,7 @@
 <div class="h-100 row justify-content-center mr-0 mt-5">
     <div class="col-12">
         <div class="container d-flex justify-content-center">
-            <app-main [data]="data" *ngIf="isLoaded" [currentPage]="data.page" (pageChanged)="onPageChanged($event)">
+            <app-main #main [data]="data" *ngIf="isLoaded" [currentPage]="data.page" (pageChanged)="onPageChanged($event)">
             </app-main>
             <app-loader *ngIf="!isLoaded"></app-loader>
         </div>
