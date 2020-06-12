@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /RubberWeb/appsettings.development.json
+/RubberWeb/.config/dotnet-tools.json
