@@ -22,7 +22,7 @@ export class ApiService {
         }
 
         // Add delay to loading. We want flex with cool duck loader.
-        return this.httpClient.get<PaginatedData<KarmaItem>>(url, { headers: { delay: '2000' } });
+        return this.httpClient.get<PaginatedData<KarmaItem>>(url, { headers: { delay: '1000' } });
     }
 
     private createPaginatedParams(request: PaginatedRequest) {
