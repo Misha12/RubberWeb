@@ -1,6 +1,8 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</body>
+<div class="h-100 row align-items-center justify-content-center mr-0">
+    <div class="col-12">
+        <div class="container d-flex justify-content-center">
+            <app-main [data]="data" *ngIf="isLoaded"></app-main>
+            <app-loader *ngIf="!isLoaded"></app-loader>
+        </div>
+    </div>
+</div>

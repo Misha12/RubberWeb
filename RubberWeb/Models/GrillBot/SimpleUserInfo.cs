@@ -1,7 +1,10 @@
-﻿namespace RubberWeb.Models.GrillBot
+﻿using System.Text.Json.Serialization;
+
+namespace RubberWeb.Models.GrillBot
 {
     public class SimpleUserInfo
     {
+        [JsonIgnore]
         public ulong ID { get; set; }
         public string Name { get; set; }
         public string Nickname { get; set; }
