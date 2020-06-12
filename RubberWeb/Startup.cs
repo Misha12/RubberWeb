@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RubberWeb.Services;
 using System;
 using System.Net.Http.Headers;
@@ -25,6 +26,15 @@ namespace RubberWeb
             var connectionString = Configuration.GetConnectionString("Default");
             services
                 .AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+            services
+                .AddLogging(config =>
+                {
+                    config
+                        .SetMinimumLevel(LogLevel.Debug)
+                        .AddConsole()
+                        .AddDebug();
+                });
 
             services
                 .AddHttpClient("GrillBot", client =>
