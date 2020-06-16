@@ -10,6 +10,7 @@ import { KarmaItem } from 'src/models/karma';
 export class MainComponent implements OnInit {
     @Input() data: PaginatedData<KarmaItem>;
     @Input() currentPage = 1;
+    @Input() pageCount: number;
 
     @Output() pageChanged = new EventEmitter<number>();
 

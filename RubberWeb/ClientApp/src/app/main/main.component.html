@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-    <ngb-pagination [collectionSize]="data.totalItemsCount" [(page)]="currentPage" [pageSize]="50" [maxSize]="maxSize"
+    <ngb-pagination [collectionSize]="data.totalItemsCount" [(page)]="currentPage" [pageSize]="pageCount" [maxSize]="maxSize"
         [boundaryLinks]="true" [rotate]="true" (pageChange)="onPageChange($event)">
     </ngb-pagination>
 </div>

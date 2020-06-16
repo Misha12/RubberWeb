@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
     isLoaded = false;
     data: PaginatedData<KarmaItem>;
 
+    pageCount = 50;
+
     @ViewChild('main', { static: false }) mainComponent: MainComponent;
 
     constructor(
@@ -26,7 +28,7 @@ export class AppComponent implements OnInit {
     }
 
     private getData(page: number) {
-        const request: PaginatedRequest = { page };
+        const request: PaginatedRequest = { page, limit: this.pageCount };
 
         this.api.getKarmaData(request).subscribe(data => {
             this.data = data;

@@ -1,6 +1,7 @@
 <div class="h-100 row justify-content-center mr-0 ml-0 mt-5">
     <div class="col-md-9">
-        <app-main #main [data]="data" *ngIf="isLoaded" [currentPage]="data.page" (pageChanged)="onPageChanged($event)">
+        <app-main #main [data]="data" *ngIf="isLoaded" [currentPage]="data.page" (pageChanged)="onPageChanged($event)"
+            [pageCount]="pageCount">
         </app-main>
         <app-loader *ngIf="!isLoaded"></app-loader>
     </div>
