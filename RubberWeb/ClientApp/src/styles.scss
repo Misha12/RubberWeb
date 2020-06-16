@@ -7,6 +7,7 @@ body {
 
 .pagination {
     $color: #7289da;
+    $dark-color: #2C2F33;
 
     & .page-item {
         &.active .page-link {
@@ -16,6 +17,8 @@ body {
 
         &:not(.active) .page-link {
             color: $color;
+            background-color: $dark-color;
+            border-color: lighten($dark-color, 10%);
         }
     }
 }
