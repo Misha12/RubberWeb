@@ -10,18 +10,15 @@
         margin-bottom: 30px;
 
         & .container-item {
-            display: flex;
-            background: rgba(0, 0, 0, 0.2);
             color: white;
+            background: rgba(0, 0, 0, 0.2);
             padding: 10px;
-            align-items: center;
+            display: grid;
+
+            grid-template-columns: 80px 50px 60% auto;
 
             &:not(:last-child) {
                 border-bottom: 1px solid rgba(81, 85, 90, 1);
-            }
-
-            & .profile-image img {
-                margin-right: 15px;
             }
 
             &:first-child {
@@ -34,47 +31,62 @@
                 border-bottom-right-radius: 10px;
             }
 
-            & .columns {
+            & .profile-image {
+                max-width: 100px;
+            }
+
+            & .name {
+                font-weight: 100;
                 display: flex;
-                justify-content: space-between;
-                width: 100%;
                 align-items: center;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
 
-                & h5 {
-                    font-weight: 100;
-                }
+            & .count {
+                margin-bottom: 0px;
 
-                & .name,
-                & .count {
-                    padding: 0px 5px;
-                    margin-bottom: 0px;
-                }
-
-                & .name {
-                    width: 40%;
-                }
-
-                & .count {
-                    width: 25%;
-                }
-
-                & .count .giving {
+                & .giving {
                     display: block;
                     font-size: 15px;
                 }
             }
 
-            & .position {
-                border: 1px solid;
-                border-radius: 50%;
-                min-width: 40px;
-                min-height: 40px;
-                font-weight: bold;
+            & .position-container {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-                margin-right: 16px;
+
+                & .position {
+                    border: 1px solid;
+                    border-radius: 50%;
+                    min-width: 40px;
+                    min-height: 40px;
+                    height: 40px;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    margin-right: 16px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .content-data {
+        & .items-container {
+            & .container-item {
+                grid-template-columns: 80px 50px auto;
+
+                & .count {
+                    grid-column: 1/4;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 10px;
+                }
             }
         }
     }
