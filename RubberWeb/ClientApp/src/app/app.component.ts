@@ -23,13 +23,25 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        const page = parseInt(this.storage.get('page', 'session') || '1', 10);
+        const page = this.getPage();
         this.getData(page);
+    }
+
+    private getPage() {
+        const pathElements = location.pathname.split('/');
+        const page = parseInt(pathElements[pathElements.length - 1], 10);
+
+        if (!page || isNaN(page)) {
+            return parseInt(this.storage.get('page', 'session') || '1', 10);
+        }
+
+        return page;
     }
 
     private getData(page: number) {
         const request: PaginatedRequest = { page, limit: this.pageCount };
 
+        window.history.replaceState({}, '', `/${page}`);
         this.api.getKarmaData(request).subscribe(data => {
             this.data = data;
             this.isLoaded = true;
