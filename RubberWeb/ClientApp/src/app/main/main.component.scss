@@ -15,7 +15,7 @@
             padding: 10px;
             display: grid;
 
-            grid-template-columns: 80px 50px 60% auto;
+            grid-template-columns: 80px 80px 60% auto;
 
             &:not(:last-child) {
                 border-bottom: 1px solid rgba(81, 85, 90, 1);
@@ -62,6 +62,7 @@
                     min-width: 40px;
                     min-height: 40px;
                     height: 40px;
+                    padding: 5px;
                     font-weight: bold;
                     display: flex;
                     align-items: center;
