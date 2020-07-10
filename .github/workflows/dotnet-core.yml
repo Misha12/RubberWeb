@@ -21,10 +21,10 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Switch to Angular
-      run: cd RubberWeb/ClientApp
     - name: NPM Install
       run: npm install
+      working-directory: RubberWeb/ClientApp
     - name: Angular build prod
       run: ng build --prod
+      working-directory: RubberWeb/ClientApp
       
