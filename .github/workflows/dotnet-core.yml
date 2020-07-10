@@ -17,14 +17,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Install dependencies
+    - name: Install dependencies (.NET)
       run: dotnet restore
-    - name: Build
+    - name: Build (.NET)
       run: dotnet build --configuration Release --no-restore
-    - name: NPM Install
+    - name: Install dependencies (Angular)
       run: npm install
       working-directory: RubberWeb/ClientApp
-    - name: Angular build prod
-      run: ng build --prod
+    - name: Build (Angular)
+      run: npm run build -- --prod
       working-directory: RubberWeb/ClientApp
       
