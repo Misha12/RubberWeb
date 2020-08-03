@@ -37,11 +37,17 @@ namespace RubberWeb.Controllers
             {
                 item.User = users.Find(o => o.ID == item.UserID);
 
+                if(item.User == null)
+                {
+                    item.User = SimpleUserInfo.DefaultUser;
+                    item.User.ID = item.UserID;
+                }
+
                 item.Position = position;
                 position++;
             }
 
-            data.Data = data.Data.Where(o => o.User != null).ToList();
+            data.Data = data.Data.ToList();
             return Ok(data);
         }
 
